@@ -4,7 +4,6 @@ namespace AdSiteWebAPI.Models
 {
     public class Bid
     {
-
         [Key]
         [Required]
         public int BidId { get; set; }

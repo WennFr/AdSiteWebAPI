@@ -17,6 +17,7 @@ namespace AdSiteWebAPI.Models
         [Required]
         public DateTime EndDate { get; set; }
         public ICollection<Bid> Bids { get; set; }
+        public ICollection<Picture> Pictures { get; set; }
 
 
     }

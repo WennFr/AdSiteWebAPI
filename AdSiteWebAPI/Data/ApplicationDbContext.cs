@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AdSiteWebAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdSiteWebAPI.Data
 {
@@ -8,7 +9,7 @@ namespace AdSiteWebAPI.Data
         {
         }
 
-        public DbSet<SuperHero> SuperHeroes { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 
 }

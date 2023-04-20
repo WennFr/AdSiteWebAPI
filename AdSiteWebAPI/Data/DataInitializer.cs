@@ -1,5 +1,7 @@
 ﻿using AdSiteWebAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using static System.Net.WebRequestMethods;
 
 namespace AdSiteWebAPI.Data
 {
@@ -17,7 +19,11 @@ namespace AdSiteWebAPI.Data
             _dbContext.Database.Migrate();
             SeedUserData();
             _dbContext.SaveChanges();
+            //SeedPictureData();
+            //_dbContext.SaveChanges();
             SeedAdvertData();
+            _dbContext.SaveChanges();
+            SeedBidData();
             _dbContext.SaveChanges();
         }
 
@@ -42,26 +48,46 @@ namespace AdSiteWebAPI.Data
             {
                 _dbContext.Add(new Advert
                 {
-                    Title = "Used Honda Rebel 1100",
-                    Description = "Selling my used Honda Rebel 1100, great speed and quality!",
-                    StartingPrice = 10000,
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddDays(5),
-                    User = _dbContext.Users.First()
+                    Title = "Honda Rebel 1100",
+                    Description = "Brand new Honda Rebel 1100, great speed and quality!",
+                    StartingPrice = 13000,
+                    StartDate = DateTime.Now.AddDays(-1),
+                    EndDate = DateTime.Now.AddDays(6),
+                    Pictures = new List<Picture>{ new Picture
+                    {
+                        URL = "https://fakeimg.pl/300x200/?text=Advert%20Image&font=lobster"
+                    }}
                 });
+
             }
         }
 
+        //private void SeedPictureData()
+        //{
+        //    if (!_dbContext.Pictures.Any())
+        //    {
+        //        _dbContext.Add(new Picture()
+        //        {
+        //            URL = "https://fakeimg.pl/300x200/?text=Advert%20Image&font=lobster"
+        //        });
+        //    }
+        //}
 
 
-
-
-
-
-
-
-
-
+        private void SeedBidData()
+        {
+            if (!_dbContext.Bids.Any())
+            {
+                _dbContext.Add(new Bid
+                {
+                    User = _dbContext.Users.First(),
+                    Amount = 14000,
+                    Advert = _dbContext.Adverts.First(),
+                    Date = DateTime.Now
+                });
+            }
+        }
+      
 
 
     }

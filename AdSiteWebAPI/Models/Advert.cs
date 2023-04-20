@@ -6,7 +6,7 @@ namespace AdSiteWebAPI.Models
     {
         [Key]
         [Required]
-        public int AdvertId { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
@@ -17,7 +17,6 @@ namespace AdSiteWebAPI.Models
         [Required]
         public DateTime EndDate { get; set; }
         [Required]
-        public User User { get; set; }
         public ICollection<Bid> Bids { get; set; }
         public ICollection<Picture> Pictures { get; set; }
 

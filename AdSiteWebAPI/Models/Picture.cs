@@ -6,11 +6,10 @@ namespace AdSiteWebAPI.Models
     {
         [Key]
         [Required]
-        public int PictureId { get; set; }
+        public int Id { get; set; }
         [Required]
         public string URL { get; set; }
-
-
+        public Advert Advert { get; set; }
 
     }
 }

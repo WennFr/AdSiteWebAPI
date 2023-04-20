@@ -6,7 +6,7 @@ namespace AdSiteWebAPI.Models
     {
         [Key]
         [Required]
-        public int BidId { get; set; }
+        public int Id { get; set; }
         [Required]
         public User User { get; set; }
         [Required]

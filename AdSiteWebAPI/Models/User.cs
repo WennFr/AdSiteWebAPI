@@ -7,7 +7,7 @@ namespace AdSiteWebAPI.Models
 
         [Key]
         [Required]
-        public int UserId { get; set; }
+        public int Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -16,7 +16,6 @@ namespace AdSiteWebAPI.Models
         public string Password { get; set; }
         [Required]
         public string Email { get; set; }
-        public ICollection<Advert> Adverts { get; set; }
         public ICollection<Bid> Bids { get; set; }
 
 

@@ -22,7 +22,7 @@ namespace AdSiteWebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Advert>>> GetAll()
         {
-            return Ok(await _dbContext.Adverts.Include(a=>a.Pictures).ToListAsync());
+            return Ok(await _dbContext.Adverts.Include(a => a.Pictures).ToListAsync());
         }
 
 
@@ -44,7 +44,6 @@ namespace AdSiteWebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Advert>> PostAdvert(AdvertCreateDto advertCreateDto)
         {
-
             var advert = new Advert
             {
                 Title = advertCreateDto.Title,
@@ -58,9 +57,24 @@ namespace AdSiteWebAPI.Controllers
             _dbContext.Adverts.Add(advert);
             await _dbContext.SaveChangesAsync();
             return Ok(await _dbContext.Adverts.ToListAsync());
-
-
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ActionResult<Advert>> Delete(int id)
+        {
+            var advert = await _dbContext.Adverts.FindAsync(id);
+
+            if (advert == null)
+            {
+                return BadRequest("Advert not found");
+            }
+
+            _dbContext.Adverts.Remove(advert);
+            await _dbContext.SaveChangesAsync();
+            return Ok(await _dbContext.Adverts.ToListAsync());
+        }
+
 
 
 
@@ -77,7 +91,7 @@ namespace AdSiteWebAPI.Controllers
                 return BadRequest("Advert not found");
             }
 
-            advertToUpdate.Title = advertUpdateDto.Title; 
+            advertToUpdate.Title = advertUpdateDto.Title;
             advertToUpdate.Description = advertUpdateDto.Description;
             advertToUpdate.StartingPrice = advertUpdateDto.StartingPrice;
             advertToUpdate.StartDate = advertUpdateDto.StartDate;
@@ -91,5 +105,26 @@ namespace AdSiteWebAPI.Controllers
 
 
 
+
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+

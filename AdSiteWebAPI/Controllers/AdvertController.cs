@@ -31,13 +31,37 @@ namespace AdSiteWebAPI.Controllers
             //var advert = _dbContext.Adverts.Find(id);
             var advert = _dbContext.Adverts.Include(a => a.Pictures).FirstOrDefault(a => a.Id == id);
 
-
-
             if (advert == null)
             {
                 return BadRequest("Advert not found");
             }
             return Ok(advert);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Advert>> UpdateAdvert(Advert advert)
+        {
+            // OBS: PUT Uppdaterar HELA SuperHero (ALLA properties)
+
+            var advertToUpdate = await _dbContext.Adverts.Include(a => a.Pictures).FirstOrDefaultAsync(a => a.Id == advert.Id);
+
+
+            if (advertToUpdate == null)
+            {
+                return BadRequest("Advert not found");
+            }
+
+            advertToUpdate.Description = advert.Description;
+            advertToUpdate.StartingPrice = advert.StartingPrice;
+            advertToUpdate.StartDate = advert.StartDate;
+            advertToUpdate.EndDate = advert.EndDate;
+            advertToUpdate.Bids = advert.Bids;
+            advertToUpdate.Pictures = advert.Pictures;
+
+            await _dbContext.SaveChangesAsync();
+
+            return Ok(await _dbContext.Adverts.ToListAsync());
+
         }
 
 

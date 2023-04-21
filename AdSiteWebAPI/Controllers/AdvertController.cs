@@ -20,9 +20,25 @@ namespace AdSiteWebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Advert>>> GetAll()
         {
-            return Ok(await _dbContext.Adverts.ToListAsync());
+            return Ok(await _dbContext.Adverts.Include(a=>a.Pictures).ToListAsync());
         }
 
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<Advert>> GetOne(int id)
+        {
+            //var advert = _dbContext.Adverts.Find(id);
+            var advert = _dbContext.Adverts.Include(a => a.Pictures).FirstOrDefault(a => a.Id == id);
+
+
+
+            if (advert == null)
+            {
+                return BadRequest("Advert not found");
+            }
+            return Ok(advert);
+        }
 
 
 

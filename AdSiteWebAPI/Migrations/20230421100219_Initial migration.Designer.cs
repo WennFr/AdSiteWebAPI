@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdSiteWebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230420180741_Initial migration")]
+    [Migration("20230421100219_Initial migration")]
     partial class Initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

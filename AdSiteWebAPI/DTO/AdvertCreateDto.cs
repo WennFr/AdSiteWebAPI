@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AdSiteWebAPI.DTO
+﻿namespace AdSiteWebAPI.DTO
 {
-    public class AdvertDto
+    public class AdvertCreateDto
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int StartingPrice { get; set; }

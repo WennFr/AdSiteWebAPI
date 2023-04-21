@@ -1,4 +1,6 @@
-﻿using AdSiteWebAPI.Data;
+﻿using System.Reflection;
+using AdSiteWebAPI.Data;
+using AdSiteWebAPI.DTO;
 using AdSiteWebAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,12 +40,36 @@ namespace AdSiteWebAPI.Controllers
             return Ok(advert);
         }
 
+
+        [HttpPost]
+        public async Task<ActionResult<Advert>> PostAdvert(AdvertCreateDto advertCreateDto)
+        {
+
+            var advert = new Advert
+            {
+                Title = advertCreateDto.Title,
+                Description = advertCreateDto.Description,
+                StartingPrice = advertCreateDto.StartingPrice,
+                StartDate = advertCreateDto.StartDate,
+                EndDate = advertCreateDto.EndDate,
+            };
+
+
+            _dbContext.Adverts.Add(advert);
+            await _dbContext.SaveChangesAsync();
+            return Ok(await _dbContext.Adverts.ToListAsync());
+
+
+        }
+
+
+
         [HttpPut]
-        public async Task<ActionResult<Advert>> UpdateAdvert(Advert advert)
+        public async Task<ActionResult<Advert>> UpdateAdvert(AdvertUpdateDto advertUpdateDto)
         {
             // OBS: PUT Uppdaterar HELA SuperHero (ALLA properties)
 
-            var advertToUpdate = await _dbContext.Adverts.Include(a => a.Pictures).FirstOrDefaultAsync(a => a.Id == advert.Id);
+            var advertToUpdate = await _dbContext.Adverts.Include(a => a.Pictures).FirstOrDefaultAsync(a => a.Id == advertUpdateDto.Id);
 
 
             if (advertToUpdate == null)
@@ -51,12 +77,11 @@ namespace AdSiteWebAPI.Controllers
                 return BadRequest("Advert not found");
             }
 
-            advertToUpdate.Description = advert.Description;
-            advertToUpdate.StartingPrice = advert.StartingPrice;
-            advertToUpdate.StartDate = advert.StartDate;
-            advertToUpdate.EndDate = advert.EndDate;
-            advertToUpdate.Bids = advert.Bids;
-            advertToUpdate.Pictures = advert.Pictures;
+            advertToUpdate.Title = advertUpdateDto.Title; 
+            advertToUpdate.Description = advertUpdateDto.Description;
+            advertToUpdate.StartingPrice = advertUpdateDto.StartingPrice;
+            advertToUpdate.StartDate = advertUpdateDto.StartDate;
+            advertToUpdate.EndDate = advertUpdateDto.EndDate;
 
             await _dbContext.SaveChangesAsync();
 

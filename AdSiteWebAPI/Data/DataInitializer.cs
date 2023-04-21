@@ -19,8 +19,6 @@ namespace AdSiteWebAPI.Data
             _dbContext.Database.Migrate();
             SeedUserData();
             _dbContext.SaveChanges();
-            //SeedPictureData();
-            //_dbContext.SaveChanges();
             SeedAdvertData();
             _dbContext.SaveChanges();
             SeedBidData();
@@ -61,18 +59,6 @@ namespace AdSiteWebAPI.Data
 
             }
         }
-
-        //private void SeedPictureData()
-        //{
-        //    if (!_dbContext.Pictures.Any())
-        //    {
-        //        _dbContext.Add(new Picture()
-        //        {
-        //            URL = "https://fakeimg.pl/300x200/?text=Advert%20Image&font=lobster"
-        //        });
-        //    }
-        //}
-
 
         private void SeedBidData()
         {

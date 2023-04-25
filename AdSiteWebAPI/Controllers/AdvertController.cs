@@ -1,7 +1,9 @@
-﻿using System.Reflection;
+﻿using System.Data;
+using System.Reflection;
 using AdSiteWebAPI.Data;
 using AdSiteWebAPI.DTO;
 using AdSiteWebAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +38,7 @@ namespace AdSiteWebAPI.Controllers
         /// </response>
 
         [HttpGet]
+        [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<List<Advert>>> GetAll()
         {
             return Ok(await _dbContext.Adverts.Include(a=> a.Picture).ToListAsync());
@@ -60,6 +63,7 @@ namespace AdSiteWebAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<Advert>> GetOne(int id)
         {
             var advert = _dbContext.Adverts.Include(a=> a.Picture).FirstOrDefault(a => a.Id == id);
@@ -89,6 +93,7 @@ namespace AdSiteWebAPI.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Advert>> PostAdvert(AdvertCreateDto advertCreateDto)
         {
             var advert = new Advert
@@ -123,6 +128,7 @@ namespace AdSiteWebAPI.Controllers
         /// </response>
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Advert>> UpdateAdvert(AdvertUpdateDto advertUpdateDto)
         {
 
@@ -164,6 +170,7 @@ namespace AdSiteWebAPI.Controllers
 
         [HttpPatch]
         [Route("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Advert>> PatchAdvert(JsonPatchDocument advert, int id)
         {
             var advertToUpdate = await _dbContext.Adverts.FindAsync(id);
@@ -200,6 +207,7 @@ namespace AdSiteWebAPI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Advert>> Delete(int id)
         {
             var advert = await _dbContext.Adverts.FindAsync(id);

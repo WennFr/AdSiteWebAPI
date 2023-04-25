@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AdSiteWebAPI.Models;
 
 namespace AdSiteWebAPI.DTO
 {
@@ -10,6 +11,7 @@ namespace AdSiteWebAPI.DTO
         public int StartingPrice { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        //public Picture Picture { get; set; }
 
     }
 }

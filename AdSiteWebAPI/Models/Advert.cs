@@ -13,7 +13,7 @@ namespace AdSiteWebAPI.Models
         public string Description { get; set; }
         [Required]
         public int StartingPrice { get; set; }
-        public Picture Picture { get; set; }
+        public Picture? Picture { get; set; }
 
         public DateTime StartDate { get; set; }
         [Required]

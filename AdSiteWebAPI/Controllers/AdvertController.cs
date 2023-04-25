@@ -88,8 +88,6 @@ namespace AdSiteWebAPI.Controllers
         /// </response>
 
 
-
-
         [HttpPost]
         public async Task<ActionResult<Advert>> PostAdvert(AdvertCreateDto advertCreateDto)
         {
@@ -100,6 +98,7 @@ namespace AdSiteWebAPI.Controllers
                 StartingPrice = advertCreateDto.StartingPrice,
                 StartDate = advertCreateDto.StartDate,
                 EndDate = advertCreateDto.EndDate,
+                Picture = null
             };
 
 
@@ -108,6 +107,20 @@ namespace AdSiteWebAPI.Controllers
             return Ok(await _dbContext.Adverts.Include(a => a.Picture).ToListAsync());
         }
 
+
+        // Update Advert ///////////////////////////////////////////////////////
+        /// <summary>
+        /// Update entire Advert And Save To Database
+        /// </summary>
+        /// <returns>
+        /// One Fully Updated Advert
+        /// </returns>
+        /// <remarks>
+        /// Example end point: GET /api/Advert
+        /// </remarks>
+        /// <response code="200">
+        /// Successfully updated the whole Advert
+        /// </response>
 
         [HttpPut]
         public async Task<ActionResult<Advert>> UpdateAdvert(AdvertUpdateDto advertUpdateDto)
@@ -126,6 +139,7 @@ namespace AdSiteWebAPI.Controllers
             advertToUpdate.StartingPrice = advertUpdateDto.StartingPrice;
             advertToUpdate.StartDate = advertUpdateDto.StartDate;
             advertToUpdate.EndDate = advertUpdateDto.EndDate;
+            advertToUpdate.Picture = null;
 
             await _dbContext.SaveChangesAsync();
 
@@ -133,6 +147,20 @@ namespace AdSiteWebAPI.Controllers
 
         }
 
+
+        // Patch Advert ///////////////////////////////////////////////////////
+        /// <summary>
+        /// Update One Advert Property And Save To Database
+        /// </summary>
+        /// <returns>
+        /// Updated Advert Property
+        /// </returns>
+        /// <remarks>
+        /// Example end point: GET /api/Advert/1
+        /// </remarks>
+        /// <response code="200">
+        /// Successfully Updated Advert Property
+        /// </response>
 
         [HttpPatch]
         [Route("{id}")]
@@ -153,6 +181,21 @@ namespace AdSiteWebAPI.Controllers
 
 
         }
+
+
+        // Delete ///////////////////////////////////////////////////////
+        /// <summary>
+        /// Delete Advert From Database
+        /// </summary>
+        /// <returns>
+        /// Deleted Advert
+        /// </returns>
+        /// <remarks>
+        /// Example end point: GET /api/Advert/1
+        /// </remarks>
+        /// <response code="200">
+        /// Successfully Deleted Advert
+        /// </response>
 
 
         [HttpDelete]

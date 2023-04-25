@@ -1,5 +1,6 @@
 using AdSiteWebAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers().AddNewtonsoftJson(); 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Added general description for Swagger
+builder.Services.AddSwaggerGen(sw =>
+{
+    sw.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Version = "v1.0",
+        Title = "AdvertSite API",
+        Description = @"API for modifying adverts",
+        Contact = new OpenApiContact
+        {
+            Name = "Frederick Wennborg",
+            Email = "frederick.wennborg@gmail.com",
+        },
+    });
+});
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

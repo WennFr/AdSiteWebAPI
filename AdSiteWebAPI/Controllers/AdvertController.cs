@@ -106,13 +106,6 @@ namespace AdSiteWebAPI.Controllers
         }
 
 
-
-
-
-
-
-
-
         [HttpDelete]
         [Route("{id}")]
         public async Task<ActionResult<Advert>> Delete(int id)

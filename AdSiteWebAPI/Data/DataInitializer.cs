@@ -30,7 +30,7 @@ namespace AdSiteWebAPI.Data
         {
             if (!_dbContext.Users.Any())
             {
-                _dbContext.Add(new User
+                _dbContext.Add(new UserClient()
                 {
                     FirstName = "John",
                     LastName = "Doe",
@@ -69,7 +69,7 @@ namespace AdSiteWebAPI.Data
                 _dbContext.Add(new Bid
                 {
                     Amount = 14000,
-                    User = _dbContext.Users.First(),
+                    UserClient = _dbContext.Users.First(),
                     Advert = _dbContext.Adverts.First(),
                     Date = DateTime.Now
                 });

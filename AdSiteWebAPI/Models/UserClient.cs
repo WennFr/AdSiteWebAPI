@@ -2,7 +2,7 @@
 
 namespace AdSiteWebAPI.Models
 {
-    public class User
+    public class UserClient
     {
 
         [Key]

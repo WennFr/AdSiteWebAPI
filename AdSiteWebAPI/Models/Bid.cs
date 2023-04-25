@@ -9,7 +9,7 @@ namespace AdSiteWebAPI.Models
         [Required]
         public int Id { get; set; }
 
-        public User User { get; set; }
+        public UserClient UserClient { get; set; }
         [Required]
         public int Amount { get; set; }
 

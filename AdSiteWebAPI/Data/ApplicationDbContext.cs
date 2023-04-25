@@ -9,7 +9,7 @@ namespace AdSiteWebAPI.Data
         {
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserClient> Users { get; set; }
         public DbSet<Bid> Bids { get; set; }
         public DbSet<Advert> Adverts { get; set; }
         public DbSet<Picture> Pictures { get; set; }

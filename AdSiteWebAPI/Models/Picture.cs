@@ -10,8 +10,6 @@ namespace AdSiteWebAPI.Models
         public int Id { get; set; }
         [Required]
         public string URL { get; set; }
-        [JsonIgnore]
-        public Advert Advert { get; set; }
 
     }
 }

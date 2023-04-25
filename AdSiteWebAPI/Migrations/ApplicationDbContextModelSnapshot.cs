@@ -37,6 +37,9 @@ namespace AdSiteWebAPI.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("PictureId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -48,6 +51,8 @@ namespace AdSiteWebAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PictureId");
 
                     b.ToTable("Adverts");
                 });
@@ -89,16 +94,11 @@ namespace AdSiteWebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AdvertId")
-                        .HasColumnType("int");
-
                     b.Property<string>("URL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AdvertId");
 
                     b.ToTable("Pictures");
                 });
@@ -132,16 +132,27 @@ namespace AdSiteWebAPI.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("AdSiteWebAPI.Models.Advert", b =>
+                {
+                    b.HasOne("AdSiteWebAPI.Models.Picture", "Picture")
+                        .WithMany()
+                        .HasForeignKey("PictureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Picture");
+                });
+
             modelBuilder.Entity("AdSiteWebAPI.Models.Bid", b =>
                 {
                     b.HasOne("AdSiteWebAPI.Models.Advert", "Advert")
-                        .WithMany("Bids")
+                        .WithMany()
                         .HasForeignKey("AdvertId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AdSiteWebAPI.Models.User", "User")
-                        .WithMany("Bids")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -149,29 +160,6 @@ namespace AdSiteWebAPI.Migrations
                     b.Navigation("Advert");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("AdSiteWebAPI.Models.Picture", b =>
-                {
-                    b.HasOne("AdSiteWebAPI.Models.Advert", "Advert")
-                        .WithMany("Pictures")
-                        .HasForeignKey("AdvertId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Advert");
-                });
-
-            modelBuilder.Entity("AdSiteWebAPI.Models.Advert", b =>
-                {
-                    b.Navigation("Bids");
-
-                    b.Navigation("Pictures");
-                });
-
-            modelBuilder.Entity("AdSiteWebAPI.Models.User", b =>
-                {
-                    b.Navigation("Bids");
                 });
 #pragma warning restore 612, 618
         }

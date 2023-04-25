@@ -37,6 +37,7 @@ namespace AdSiteWebAPI.Data
                     Password = "Hejsan123#",
                     Email = "John.Doe@hotmail.com"
                 });
+             
             }
         }
 
@@ -51,10 +52,11 @@ namespace AdSiteWebAPI.Data
                     StartingPrice = 13000,
                     StartDate = DateTime.Now.AddDays(-1),
                     EndDate = DateTime.Now.AddDays(6),
-                    Pictures = new List<Picture>{ new Picture
+                    Picture = new Picture
                     {
                         URL = "https://fakeimg.pl/300x200/?text=Advert%20Image&font=lobster"
-                    }}
+                    }
+                
                 });
 
             }
@@ -66,8 +68,8 @@ namespace AdSiteWebAPI.Data
             {
                 _dbContext.Add(new Bid
                 {
-                    User = _dbContext.Users.First(),
                     Amount = 14000,
+                    User = _dbContext.Users.First(),
                     Advert = _dbContext.Adverts.First(),
                     Date = DateTime.Now
                 });

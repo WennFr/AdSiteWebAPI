@@ -5,25 +5,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AdSiteWebAPI.Migrations
 {
-    public partial class Initialmigration : Migration
+    public partial class rsds : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Adverts",
+                name: "Pictures",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartingPrice = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    URL = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Adverts", x => x.Id);
+                    table.PrimaryKey("PK_Pictures", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,21 +39,25 @@ namespace AdSiteWebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pictures",
+                name: "Adverts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AdvertId = table.Column<int>(type: "int", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartingPrice = table.Column<int>(type: "int", nullable: false),
+                    PictureId = table.Column<int>(type: "int", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pictures", x => x.Id);
+                    table.PrimaryKey("PK_Adverts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pictures_Adverts_AdvertId",
-                        column: x => x.AdvertId,
-                        principalTable: "Adverts",
+                        name: "FK_Adverts_Pictures_PictureId",
+                        column: x => x.PictureId,
+                        principalTable: "Pictures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -91,6 +91,11 @@ namespace AdSiteWebAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Adverts_PictureId",
+                table: "Adverts",
+                column: "PictureId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bids_AdvertId",
                 table: "Bids",
                 column: "AdvertId");
@@ -99,11 +104,6 @@ namespace AdSiteWebAPI.Migrations
                 name: "IX_Bids_UserId",
                 table: "Bids",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pictures_AdvertId",
-                table: "Pictures",
-                column: "AdvertId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -112,13 +112,13 @@ namespace AdSiteWebAPI.Migrations
                 name: "Bids");
 
             migrationBuilder.DropTable(
-                name: "Pictures");
+                name: "Adverts");
 
             migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Adverts");
+                name: "Pictures");
         }
     }
 }

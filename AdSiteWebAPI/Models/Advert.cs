@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace AdSiteWebAPI.Models
 {
@@ -12,12 +13,11 @@ namespace AdSiteWebAPI.Models
         public string Description { get; set; }
         [Required]
         public int StartingPrice { get; set; }
-        [Required]
+        public Picture Picture { get; set; }
+
         public DateTime StartDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
-        public ICollection<Bid> Bids { get; set; }
-        public ICollection<Picture> Pictures { get; set; }
 
 
     }

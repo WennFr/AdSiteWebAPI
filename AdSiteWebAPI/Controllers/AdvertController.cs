@@ -3,6 +3,7 @@ using AdSiteWebAPI.Data;
 using AdSiteWebAPI.DTO;
 using AdSiteWebAPI.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +23,7 @@ namespace AdSiteWebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Advert>>> GetAll()
         {
-            return Ok(await _dbContext.Adverts.Include(a => a.Pictures).ToListAsync());
+            return Ok(await _dbContext.Adverts.Include(a=> a.Picture).ToListAsync());
         }
 
 
@@ -30,7 +31,7 @@ namespace AdSiteWebAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult<Advert>> GetOne(int id)
         {
-            var advert = _dbContext.Adverts.Include(a => a.Pictures).FirstOrDefault(a => a.Id == id);
+            var advert = _dbContext.Adverts.FirstOrDefault(a => a.Id == id);
 
             if (advert == null)
             {
@@ -58,6 +59,60 @@ namespace AdSiteWebAPI.Controllers
             return Ok(await _dbContext.Adverts.ToListAsync());
         }
 
+
+        [HttpPut]
+        public async Task<ActionResult<Advert>> UpdateAdvert(AdvertUpdateDto advertUpdateDto)
+        {
+
+            var advertToUpdate = await _dbContext.Adverts.FirstOrDefaultAsync(a => a.Id == advertUpdateDto.Id);
+
+
+            if (advertToUpdate == null)
+            {
+                return BadRequest("Advert not found");
+            }
+
+            advertToUpdate.Title = advertUpdateDto.Title;
+            advertToUpdate.Description = advertUpdateDto.Description;
+            advertToUpdate.StartingPrice = advertUpdateDto.StartingPrice;
+            advertToUpdate.StartDate = advertUpdateDto.StartDate;
+            advertToUpdate.EndDate = advertUpdateDto.EndDate;
+
+            await _dbContext.SaveChangesAsync();
+
+            return Ok(await _dbContext.Adverts.ToListAsync());
+
+        }
+
+
+        [HttpPatch]
+        [Route("{id}")]
+        public async Task<ActionResult<Advert>> PatchAdvert(JsonPatchDocument advert, int id)
+        {
+            var advertToUpdate = await _dbContext.Adverts.FindAsync(id);
+
+            if (advertToUpdate == null)
+            {
+                return BadRequest("Advert not found.");
+            }
+
+            advert.ApplyTo(advertToUpdate);
+            await _dbContext.SaveChangesAsync();
+
+
+            return Ok(await _dbContext.Adverts.ToListAsync());
+
+
+        }
+
+
+
+
+
+
+
+
+
         [HttpDelete]
         [Route("{id}")]
         public async Task<ActionResult<Advert>> Delete(int id)
@@ -77,29 +132,6 @@ namespace AdSiteWebAPI.Controllers
 
 
 
-        [HttpPut]
-        public async Task<ActionResult<Advert>> UpdateAdvert(AdvertUpdateDto advertUpdateDto)
-        {
-
-            var advertToUpdate = await _dbContext.Adverts.Include(a => a.Pictures).FirstOrDefaultAsync(a => a.Id == advertUpdateDto.Id);
-
-
-            if (advertToUpdate == null)
-            {
-                return BadRequest("Advert not found");
-            }
-
-            advertToUpdate.Title = advertUpdateDto.Title;
-            advertToUpdate.Description = advertUpdateDto.Description;
-            advertToUpdate.StartingPrice = advertUpdateDto.StartingPrice;
-            advertToUpdate.StartDate = advertUpdateDto.StartDate;
-            advertToUpdate.EndDate = advertUpdateDto.EndDate;
-
-            await _dbContext.SaveChangesAsync();
-
-            return Ok(await _dbContext.Adverts.ToListAsync());
-
-        }
 
 
 

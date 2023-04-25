@@ -56,7 +56,7 @@ namespace AdSiteWebAPI.Controllers
 
             _dbContext.Adverts.Add(advert);
             await _dbContext.SaveChangesAsync();
-            return Ok(await _dbContext.Adverts.ToListAsync());
+            return Ok(await _dbContext.Adverts.Include(a => a.Picture).ToListAsync());
         }
 
 
@@ -80,7 +80,7 @@ namespace AdSiteWebAPI.Controllers
 
             await _dbContext.SaveChangesAsync();
 
-            return Ok(await _dbContext.Adverts.ToListAsync());
+            return Ok(await _dbContext.Adverts.Include(a => a.Picture).ToListAsync());
 
         }
 
@@ -100,7 +100,7 @@ namespace AdSiteWebAPI.Controllers
             await _dbContext.SaveChangesAsync();
 
 
-            return Ok(await _dbContext.Adverts.ToListAsync());
+            return Ok(await _dbContext.Adverts.Include(a=> a.Picture).ToListAsync());
 
 
         }

@@ -20,6 +20,21 @@ namespace AdSiteWebAPI.Controllers
 
         private readonly ApplicationDbContext _dbContext;
 
+
+        // Get All ///////////////////////////////////////////////////////
+        /// <summary>
+        /// Retrieve All Adverts From Database
+        /// </summary>
+        /// <returns>
+        /// Full list of Adverts
+        /// </returns>
+        /// <remarks>
+        /// Example end point: GET /api/Advert
+        /// </remarks>
+        /// <response code="200">
+        /// Successfully returned a full list of All existing Adverts
+        /// </response>
+
         [HttpGet]
         public async Task<ActionResult<List<Advert>>> GetAll()
         {
@@ -27,11 +42,27 @@ namespace AdSiteWebAPI.Controllers
         }
 
 
+
+        // Get One ///////////////////////////////////////////////////////
+        /// <summary>
+        /// Retrieve One Advert From Database
+        /// </summary>
+        /// <returns>
+        /// One Advert
+        /// </returns>
+        /// <remarks>
+        /// Example end point: GET /api/Advert/1
+        /// </remarks>
+        /// <response code="200">
+        /// Successfully returned one existing Advert
+        /// </response>
+
+
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult<Advert>> GetOne(int id)
         {
-            var advert = _dbContext.Adverts.FirstOrDefault(a => a.Id == id);
+            var advert = _dbContext.Adverts.Include(a=> a.Picture).FirstOrDefault(a => a.Id == id);
 
             if (advert == null)
             {
@@ -39,6 +70,24 @@ namespace AdSiteWebAPI.Controllers
             }
             return Ok(advert);
         }
+
+
+
+        // Post Advert ///////////////////////////////////////////////////////
+        /// <summary>
+        /// Create New Advert And Save To Database
+        /// </summary>
+        /// <returns>
+        /// One Created Advert
+        /// </returns>
+        /// <remarks>
+        /// Example end point: GET /api/Advert
+        /// </remarks>
+        /// <response code="200">
+        /// Successfully created a new Advert
+        /// </response>
+
+
 
 
         [HttpPost]

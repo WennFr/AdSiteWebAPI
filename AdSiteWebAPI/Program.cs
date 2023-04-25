@@ -1,6 +1,7 @@
 using AdSiteWebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,13 @@ builder.Services.AddSwaggerGen(sw =>
             Email = "frederick.wennborg@gmail.com",
         },
     });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    sw.IncludeXmlComments(xmlPath);
+
+
+
 });
 
 

@@ -30,7 +30,6 @@ namespace AdSiteWebAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult<Advert>> GetOne(int id)
         {
-            //var advert = _dbContext.Adverts.Find(id);
             var advert = _dbContext.Adverts.Include(a => a.Pictures).FirstOrDefault(a => a.Id == id);
 
             if (advert == null)
@@ -81,7 +80,6 @@ namespace AdSiteWebAPI.Controllers
         [HttpPut]
         public async Task<ActionResult<Advert>> UpdateAdvert(AdvertUpdateDto advertUpdateDto)
         {
-            // OBS: PUT Uppdaterar HELA SuperHero (ALLA properties)
 
             var advertToUpdate = await _dbContext.Adverts.Include(a => a.Pictures).FirstOrDefaultAsync(a => a.Id == advertUpdateDto.Id);
 

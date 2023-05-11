@@ -37,7 +37,7 @@ namespace AdSiteWebAPI.Data
                     Password = "Hejsan123#",
                     Email = "John.Doe@hotmail.com"
                 });
-             
+
             }
         }
 
@@ -59,7 +59,35 @@ namespace AdSiteWebAPI.Data
                 
                 });
 
-            }
+				_dbContext.Add(new Advert
+				{
+					Title = "Mountain Bike Sale",
+					Description = "Get ready for your next adventure with our high-performance mountain bikes! Whether you're tackling steep trails or exploring off-road terrains, our bikes will provide the ultimate riding experience.",
+					StartingPrice = 900,
+					StartDate = DateTime.Now.AddDays(-2),
+					EndDate = DateTime.Now.AddDays(8),
+					Picture = new Picture
+					{
+						URL = "https://fakeimg.pl/300x200/?text=Mountain%20Bike&font=lobster"
+					}
+				});
+
+
+				_dbContext.Add(new Advert
+				{
+					Title = "Luxury Watch Clearance",
+					Description = "Upgrade your style with our luxury watches collection. From elegant designs to exquisite craftsmanship, our watches will add a touch of sophistication to your outfits. Don't miss out on our clearance sale!",
+					StartingPrice = 5000,
+					StartDate = DateTime.Now.AddDays(-3),
+					EndDate = DateTime.Now.AddDays(5),
+					Picture = new Picture
+					{
+						URL = "https://fakeimg.pl/300x200/?text=Luxury%20Watch&font=lobster"
+					}
+				});
+
+
+			}
         }
 
         private void SeedBidData()

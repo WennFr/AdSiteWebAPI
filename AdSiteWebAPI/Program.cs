@@ -71,6 +71,10 @@ builder.Services.AddSwaggerGen(sw =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddTransient<DataInitializer>();
+
+
+
 // JWT Token authorisation ======================================================
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -99,6 +103,14 @@ builder.Services.AddCors(o => o.AddPolicy("AllowAll", builder =>
 }));
 
 var app = builder.Build();
+
+
+using (var scope = app.Services.CreateScope())
+{
+	scope.ServiceProvider.GetService<DataInitializer>().MigrateData();
+}
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
